@@ -10,10 +10,10 @@ Parameters:
     Type: String
     Description: GitHub repository owner
     Default: your-github-username
-  GitHubToken:
+  ConnectionArn:
     Type: String
-    Description: GitHub personal access token
-    NoEcho: true
+    Description: CodeConnections ARN for GitHub
+    Default: arn:aws:codeconnections:eu-west-1:361509912577:connection/3600e1d6-0460-4922-938c-3e7c5ad02a74
 
 Resources:
   # S3 Bucket for CodePipeline artifacts
@@ -110,14 +110,13 @@ Resources:
             - Name: SourceAction
               ActionTypeId:
                 Category: Source
-                Owner: ThirdParty
-                Provider: GitHub
+                Owner: AWS
+                Provider: CodeStarSourceConnection
                 Version: '1'
               Configuration:
-                Owner: !Ref GitHubOwner
-                Repo: !Ref GitHubRepo
-                Branch: main
-                OAuthToken: !Ref GitHubToken
+                ConnectionArn: !Ref ConnectionArn
+                FullRepositoryId: !Sub '${GitHubOwner}/${GitHubRepo}'
+                BranchName: main
               OutputArtifacts:
                 - Name: SourceOutput
         - Name: SecretScan
