@@ -94,6 +94,10 @@ Resources:
                   - codebuild:BatchGetBuilds
                   - codebuild:StartBuild
                 Resource: !GetAtt SecretScanProject.Arn
+              - Effect: Allow
+                Action:
+                  - codeconnections:UseConnection
+                Resource: !Ref ConnectionArn
 
   # CodePipeline
   SecretDetectionPipeline:
