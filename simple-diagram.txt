@@ -1,0 +1,36 @@
+SECRET DETECTION POC - SIMPLE ARCHITECTURE
+
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│ Developer   │────▶│   GitHub    │────▶│CodePipeline │────▶│ CodeBuild   │
+│             │     │             │     │             │     │             │
+│ git push    │     │ Webhook     │     │ Triggers    │     │ TruffleHog  │
+└─────────────┘     └─────────────┘     └─────────────┘     └─────────────┘
+                                                                    │
+                                                                    ▼
+                                                            ┌─────────────┐
+                                                            │   Result    │
+                                                            │             │
+                                                            │ ✅ Pass     │
+                                                            │ ❌ Fail     │
+                                                            └─────────────┘
+                                                                    │
+                                                                    ▼
+                                                            ┌─────────────┐
+                                                            │ CloudWatch  │
+                                                            │    Logs     │
+                                                            └─────────────┘
+
+COMPONENTS:
+- GitHub: Source repository
+- CodePipeline: 2 stages (Source + Build)  
+- CodeBuild: Runs secret scanner
+- CloudWatch: Stores logs
+- S3: Stores artifacts (auto-created)
+
+FLOW:
+1. Developer pushes code
+2. GitHub webhook triggers pipeline
+3. CodePipeline starts build
+4. CodeBuild scans with TruffleHog
+5. Build passes/fails based on scan
+6. Results logged to CloudWatch

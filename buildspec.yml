@@ -1,0 +1,37 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    commands:
+      - echo "Installing TruffleHog..."
+      - pip install trufflehog3
+      
+  pre_build:
+    commands:
+      - echo "Starting secret scan..."
+      - echo "Build started on `date`"
+      
+  build:
+    commands:
+      - echo "Scanning repository for secrets..."
+      - trufflehog3 --format json --output secrets-report.json ./ || echo "Scan completed"
+      - |
+        if [ -s secrets-report.json ]; then
+          echo "🚨 SECRETS DETECTED! Build failed."
+          echo "Found secrets in the following files:"
+          cat secrets-report.json
+          exit 1
+        else
+          echo "✅ No secrets detected. Build passed."
+        fi
+        
+  post_build:
+    commands:
+      - echo "Secret scan completed on `date`"
+
+artifacts:
+  files:
+    - secrets-report.json
+  name: secret-scan-results
