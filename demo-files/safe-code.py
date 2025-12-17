@@ -7,7 +7,7 @@ import os
 import boto3
 
 def get_aws_client():
-    """Get AWS client using environment variables or IAM roles."""
+    """Get AWS client using environment variables or IAM role."""
     # Good practice: Use environment variables or IAM roles
     access_key = os.environ.get('AWS_ACCESS_KEY_ID')
     secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
