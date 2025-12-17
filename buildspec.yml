@@ -18,7 +18,7 @@ phases:
       - echo "Scanning repository for secrets..."
       - trufflehog3 --format json --output secrets-report.json ./ || echo "Scan completed"
       - |
-        if [ -s secrets-report.json ]; then
+        if [ -f secrets-report.json ] && [ "$(cat secrets-report.json)" != "[]" ]; then
           echo "🚨 SECRETS DETECTED! Build failed."
           echo "Found secrets in the following files:"
           cat secrets-report.json
