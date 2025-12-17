@@ -50,7 +50,7 @@ Resources:
                 Action:
                   - s3:GetObject
                   - s3:PutObject
-                Resource: !Sub '${ArtifactsBucket}/*'
+                Resource: !Sub 'arn:aws:s3:::${ArtifactsBucket}/*'
 
   # CodeBuild Project
   SecretScanProject:
@@ -88,7 +88,7 @@ Resources:
                 Action:
                   - s3:GetObject
                   - s3:PutObject
-                Resource: !Sub '${ArtifactsBucket}/*'
+                Resource: !Sub 'arn:aws:s3:::${ArtifactsBucket}/*'
               - Effect: Allow
                 Action:
                   - codebuild:BatchGetBuilds
