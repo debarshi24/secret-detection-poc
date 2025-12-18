@@ -25,7 +25,7 @@ COMPONENTS:
 - CodePipeline: 2 stages (Source + Build)  
 - CodeBuild: Runs secret scanner
 - CloudWatch: Stores logs
-- S3: Stores artifacts (auto-created)
+- S3: Stores artifacts (auto-created)dev
 
 FLOW:
 1. Developer pushes code
