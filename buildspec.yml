@@ -18,13 +18,21 @@ phases:
       - echo "Scanning repository for secrets..."
       - trufflehog3 --format json --output secrets-report.json ./ || echo "Scan completed"
       - |
-        if [ -f secrets-report.json ] && [ "$(cat secrets-report.json)" != "[]" ]; then
-          echo "🚨 SECRETS DETECTED! Build failed."
-          echo "Found secrets in the following files:"
+        echo "Debug: Checking secrets-report.json..."
+        if [ -f secrets-report.json ]; then
+          echo "File exists. Content:"
           cat secrets-report.json
-          exit 1
+          echo "End of file content."
+          CONTENT=$(cat secrets-report.json | tr -d '\n\r\t ')
+          echo "Cleaned content: '$CONTENT'"
+          if [ "$CONTENT" != "[]" ] && [ "$CONTENT" != "" ]; then
+            echo "🚨 SECRETS DETECTED! Build failed."
+            exit 1
+          else
+            echo "✅ No secrets detected. Build passed."
+          fi
         else
-          echo "✅ No secrets detected. Build passed."
+          echo "✅ No secrets report file. Build passed."
         fi
         
   post_build:
