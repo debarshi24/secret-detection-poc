@@ -18,7 +18,7 @@ GitHub → CodePipeline → CodeBuild (TruffleHog) → CloudWatch Logs
 - **CodePipeline**: Orchestrates the CI/CD workflow  
 - **CodeBuild**: Runs TruffleHog secret scanner
 - **CloudWatch**: Stores build logs and results
-- **S3**: Stores pipeline artifacts
+- **S3**: Stores pipeline artifacts, (dsa)
 
 ## Quick Setup
 
