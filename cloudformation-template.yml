@@ -122,6 +122,7 @@ Resources:
                 ConnectionArn: !Ref ConnectionArn
                 FullRepositoryId: !Sub '${GitHubOwner}/${GitHubRepo}'
                 BranchName: main
+                DetectChanges: true
               OutputArtifacts:
                 - Name: SourceOutput
         - Name: SecretScan
