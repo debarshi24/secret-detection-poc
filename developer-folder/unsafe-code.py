@@ -9,7 +9,7 @@ def get_aws_client():
     """BAD PRACTICE: Hardcoded credentials."""
     # This will trigger the secret scanner
     aws_access_key = "AKIAIOSFODNN7EXAMPLE"
-    aws_secret_key = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+    aws_secret_key = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEYYYYY"
     
     return boto3.client(
         's3',
